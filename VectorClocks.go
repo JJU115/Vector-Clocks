@@ -68,9 +68,9 @@ func process(num int) {
 	//their process's final vector timestamps along the finalStamps channel
 	if done == numProcesses {
 		for k := 0; k < numProcesses; k++ {
-			fmt.Println("finished")
 			finishChannels[k] <- true
 		}
+		fmt.Println("All processes finished")
 	}
 }
 
@@ -83,7 +83,6 @@ func clockHolder(b chan bool, receive chan []int, send chan int, num int) {
 		case vec := <-receive:
 			//Received a message from another process containing vector timestamp MTS
 			//Increment own clock then set the timestamp of this process as TS[k] = max(TS[k], MTS[k]) for k = 1 to numProcesses
-			fmt.Println("Received vec", vec)
 			vectorTS[num]++
 			if vec[0] != -1 {
 				for i := 0; i < numProcesses; i++ {
@@ -94,7 +93,6 @@ func clockHolder(b chan bool, receive chan []int, send chan int, num int) {
 			}
 		case dest := <-send:
 			//Receiving a signal to send a vector timestamp
-			fmt.Println("Received send signal to ", dest)
 			vectorTS[num]++
 			vectorChannels[dest] <- vectorTS
 		case <-b:
