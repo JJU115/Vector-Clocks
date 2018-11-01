@@ -10,3 +10,11 @@ An implementation and demonstration of the Vector Clocks algorithm in Golang.
 <li>Each time a process sends a message, it increments its own logical clock in the vector by one (as in the bullet above) and then sends a copy of its own vector.</li>
 <li>Each time a process receives a message, it increments its own logical clock in the vector by one and updates each element in its vector by taking the maximum of the value in its own vector clock and the value in the vector in the received message (for every element).</li>
 </ul>
+
+<br>
+
+Processes are represented by goroutines, the number of these for VectorClocks.go to simulate must be specified when running the .exe: VectorClocks <num_processes>
+
+<br>
+
+Each process has a co-executing goroutine: "clockHolder" which handles all aspects of updating its process's vector timestamp, receiving timestamps from other processes, and sending timestamps to other processes' clockHolders. A global array of channels allows communication between clockHolders and processes.
