@@ -101,8 +101,8 @@ func clockHolder(b chan bool, receive chan []int, send chan int, num int) {
 				}
 			} else {
 				fmt.Println("Process",num,"event",eventNum,"timestamp:",vectorTS)
+				eventNum++
 			}	
-			eventNum++
 		case dest := <-send:
 			//Receiving a signal to send a vector timestamp
 			vectorTS[num]++
