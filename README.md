@@ -18,3 +18,7 @@ Processes are represented by goroutines, the number of these for VectorClocks.go
 <br>
 
 Each process has a co-executing goroutine: "clockHolder" which handles all aspects of updating its process's vector timestamp, receiving timestamps from other processes, and sending timestamps to other processes' clockHolders. A global array of channels allows communication between clockHolders and processes.
+
+<br>
+
+There are two results files obtained from running VectorClocks.go, 5PResults.txt and 10PResults.txt, with 5 and 10 simulated processes respectively.
