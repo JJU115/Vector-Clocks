@@ -3,7 +3,7 @@
 	The number of processes to simulate must be specified on the command line when invoking the program
 	as follows: VectorClocks <num_processes>.
 
-	Each process will run concurrently and maintain a copy of a local "Vector clock". The number of events generated
+	Each process will run and maintain a copy of a local "Vector clock". The number of events generated
 	by each process will be a random integer between 0 and 10. Before generating an event each process will sleep for
 	a random number of seconds then has a 50% chance of either experiencing an internal event or sending a message to 
 	another process. When one of these events occurs the program will report it with a parenthisized number representing
@@ -16,7 +16,12 @@
 	(0) means this is process 3's 0th event
 
 	Author: Justin Underhay
-	Date of last modification: Nov 1, 2018
+	Date of last modification: Nov 9, 2018
+*/
+
+/*
+	If you want all process goroutines to run simultaneously, remove the lock.Lock() statement from line 56 and place it directly
+	before the done++ statement on line 81. 
 */
 
 package main
