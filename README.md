@@ -17,8 +17,12 @@ Processes are represented by goroutines, the number of these for VectorClocks.go
 
 <br>
 
-Each process has a co-executing goroutine: "clockHolder" which handles all aspects of updating its process's vector timestamp, receiving timestamps from other processes, and sending timestamps to other processes' clockHolders. A global array of channels allows communication between clockHolders and processes.
+Each process has a co-executing goroutine: "clockHolder" which handles all aspects of updating its process's vector timestamp, receiving timestamps from other processes, and sending timestamps to other processes' clockHolders. A global array of channels allows communication between clockHolders and processes. Note that timestamps are zero-based arrays. Index 0 = clock of process 0 and so on.
 
 <br>
 
 There are two results files obtained from running VectorClocks.go, 5PResults.txt and 10PResults.txt, with 5 and 10 simulated processes respectively.
+
+<br>
+
+For the purposes of testing, both test files were run with the restriction that only 1 process is 'active', that is capable of experiencing events, at any given time. All non-running processes that haven't finished are still able to receive and process messages from running processes. The correctness of the Vector Clocks can be verified by examining the output and finding that for any process, any of its event's Vector timestamps are not less than any event's Vector timestamp for all previous processes. For example: If process 8 finishes before process 5 begins then it should be found that for any pair of process 8/process 5 events the timestamp of the process 5 event will have at least one value greater than the corresponding spot in the process 8 timestamp meaning the process 5 event can not definitively be said to come before the process 8 event.
