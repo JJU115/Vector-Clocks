@@ -47,6 +47,10 @@ func process(num int) {
 	//The clockHolder function manages the process's vector stamp, receives vectors, and sends vectors
 	go clockHolder(finishChannels[num], vectorChannels[num], sendChan, num)
 
+	//This lock ensures only 1 process will go through its event cycle at once
+	lock.Lock();
+	fmt.Println("Process", num, "start")
+
 	var dest int
 
 	for i := 0; i < rand.Intn(10); i++ {
@@ -69,9 +73,10 @@ func process(num int) {
 	}
 
 	//Process is finished
-	lock.Lock()
 	done++
+	fmt.Println("Process", num, "done")
 	lock.Unlock()
+
 
 	//If this is the last process it will signal all process clockholders to end and send
 	//their process's final vector timestamps along the finalStamps channel
@@ -94,6 +99,7 @@ func clockHolder(b chan bool, receive chan []int, send chan int, num int) {
 			//Increment own clock then set the timestamp of this process as TS[k] = max(TS[k], MTS[k]) for k = 1 to numProcesses
 			vectorTS[num]++
 			if vec[0] != -1 {
+				fmt.Println("Process",num,"received message")
 				for i := 0; i < numProcesses; i++ {
 					if vec[i] > vectorTS[i] {
 						vectorTS[i] = vec[i]
