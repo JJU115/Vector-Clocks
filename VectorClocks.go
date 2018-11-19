@@ -21,7 +21,7 @@
 
 /*
 	If you want all process goroutines to run simultaneously, remove the lock.Lock() statement from line 56 and place it directly
-	before the done++ statement on line 81. 
+	before the done++ statement on line 82. 
 */
 
 package main
@@ -78,8 +78,8 @@ func process(num int) {
 	}
 
 	//Process is finished
-	done++
 	//Put lock.Lock() here to allow simultaneous execution of all process goroutines
+	done++
 	fmt.Println("Process", num, "done")
 	lock.Unlock()
 
