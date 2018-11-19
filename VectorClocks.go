@@ -79,6 +79,7 @@ func process(num int) {
 
 	//Process is finished
 	done++
+	//Put lock.Lock() here to allow simultaneous execution of all process goroutines
 	fmt.Println("Process", num, "done")
 	lock.Unlock()
 
